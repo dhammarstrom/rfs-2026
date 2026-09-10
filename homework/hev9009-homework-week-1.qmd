@@ -1,0 +1,39 @@
+---
+title: "Data visializations using R: Homework"
+typst-logo:
+  path: "logo-eng.png"
+course: "HEV9009"
+course-link: "https://studiekatalog.edutorium.no/inn/nb/course/HEV9009/2026-autumn"
+page-numbering: "none"  # Options: "1", "I", "i", "a", "A", or "none" to disable
+margin-notes:
+  - title: "Tutor"
+    position: 5
+    content: "[Daniel Hammarström](mailto:daniel.hammarstrom@inn.no)"
+  - title: "Course notes"
+    position: 10
+    content: "[Data visualization (Ch 1-5)](https://dhammarstrom.github.io/RFS/) <br> [R basics (Ch 1-4)](https://dhammarstrom.github.io/r-crash-course/)"
+  - title: "Course files"
+    position: 12
+    content: "[GitHub](https://github.com/dhammarstrom/rfs-2026)"
+format:
+  innHandout-typst: default
+bibliographystyle: "apa"
+reference-section-title: false     # disables Quarto's automatic bibliography heading
+bibliography-heading: "References" # our own heading for the bibliography
+crossref:
+  fig-title: Figure    # (default is "Figure")
+  tbl-title: Table     # (default is "Table")
+  title-delim: ":"     # (default is ":")
+---
+
+Your homework should result in multiple versions of a standalone graphic in PDF format. The size of the graphic should be adjusted to a suitable format. E.g., a large infographic-style graphic could be larger than A4. A graphic designated for publication in a scientific journal could be in a two-column width and 1/3 of a printed page; consult your favorite scientific journal. 
+
+Create at least three versions of the same graph using the same underlying data, using different design choices. The various design choices should be carefully considered and support the interpretation of the graphics. The distinct design choices could include organization of the underlying data, different facets, manipulation of axes, annotations, color schemes, titles, scales, etc. Be sure to include a caption in the figure file to make it completely standalone.
+
+For this homework, you can use data from your own work, data you find online, or as part of an R package. The [`exscidata`](https://github.com/dhammarstrom/exscidata/tree/main) package contains datasets used in examples in this course. Other great resources are [Awesom Public Datasets](https://github.com/awesomedata/awesome-public-datasets), or the [datasets package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html).
+
+Be prepared to share your graphics at our next meeting and discuss your design choices and the message your graphic conveys.
+
+You can consider saving your work in public GitHub repository, see the [R basics (Ch 1-4)](https://dhammarstrom.github.io/r-crash-course/) for what you need to accomplish this!
+
+
