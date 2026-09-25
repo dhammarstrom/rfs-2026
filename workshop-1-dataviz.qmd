@@ -1,0 +1,299 @@
+---
+title: "Workshop: Data visualization"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+
+
+## Setup
+
+These are the steps needed to start up the workshop.
+
+
+```{r}
+
+# Install exscidata
+library(devtools)
+install_github("dhammarstrom/exscidata")
+
+# Additional packages that we will use
+
+# To install these packages e.g., 
+# install.package("ggtext")
+
+library(tidyverse)
+library(ggtext)
+library(cowplot)
+
+
+
+# Load the data 
+dat <- exscidata::thorstensson
+
+?thorstensson
+
+
+```
+
+
+
+## The basics
+
+- Data
+- Aesthetics
+- Geometric objects
+- Facets
+- Groups
+- Scales
+
+```{r}
+
+ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           color = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  scale_color_brewer(type = "div")
+  
+  
+  
+
+
+
+```
+
+
+
+## Annotations
+
+- Labels
+- Annotations
+
+
+```{r}
+
+
+
+ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           color = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  labs(x = "Fast twitch fiber are", 
+       y = "Relative peak torque", 
+       color = "Group") +
+  
+  annotate("text", 
+           label = "Downhill skiers", 
+           x = 75, 
+           y = 80) +
+  annotate("point", 
+           shape = 21, 
+           size = 4,
+           x = 90, y = 90) +
+  annotate("segment", 
+           x = 70, xend = 90, 
+           y = 70, yend = 90, 
+           arrow = arrow(type = "closed")) +
+    annotate("curve",
+             curvature = -2,
+           x = 70, xend = 90, 
+           y = 70, yend = 90, 
+           arrow = arrow(type = "closed"))
+  
+  
+  
+
+
+
+```
+
+
+
+
+## More scales, color, shapes etc.
+
+- Control color, fill and shape
+- Color manipulation via alpha
+
+
+```{r}
+
+
+ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           fill = group, 
+           shape = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  labs(x = "Fast twitch fiber are", 
+       y = "Relative peak torque", 
+       fill = "Group", 
+       shape = "Group") +
+  
+  scale_shape_manual(values = c(21, 22, 23, 24, 4))
+  
+
+
+```
+
+
+
+## Themes
+
+- Built in themes
+- Changing theme components
+- Building a custom theme
+
+```{r}
+
+
+
+my_theme <- function() {
+    
+  theme(legend.key.size = unit(6, "mm"), 
+        axis.ticks.length = unit(10, "mm"))
+  
+}
+
+
+
+ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           fill = group, 
+           shape = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  labs(x = "Fast twitch fiber are", 
+       y = "Relative peak torque", 
+       fill = "Group", 
+       shape = "Group") +
+  
+  scale_shape_manual(values = c(21, 22, 23, 24, 4)) +
+  
+  theme_classic() + 
+  my_theme()
+  
+  
+  
+  
+
+
+```
+
+
+## More on annotations
+
+- ggtext for markdown styled text
+
+
+```{r}
+
+
+ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           fill = group, 
+           shape = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  labs(x = "Fast<sub>twitch</sub> fiber <sup>area</sup>, &rarr; &deg;C", 
+       y = "Relative peak torque", 
+       fill = "Group", 
+       shape = "Group") +
+  
+  scale_shape_manual(values = c(21, 22, 23, 24, 4)) +
+  
+  theme_classic() +
+  theme(axis.title.x = element_markdown())
+  
+
+
+
+
+```
+
+
+
+## Combining multiple plots
+
+- Using cowplot
+
+```{r}
+
+p1 <- ggplot(data = dat, 
+       aes(x = ft_area_pct, 
+           y = peak_torque_pct_mvc, 
+           fill = group, 
+           shape = group)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(limits = c(0, 100)) +
+  
+  labs(x = "Fast<sub>twitch</sub> fiber <sup>area</sup>, &rarr; &deg;C", 
+       y = "Relative peak torque", 
+       fill = "Group", 
+       shape = "Group") +
+  
+  scale_shape_manual(values = c(21, 22, 23, 24, 4)) +
+  
+  theme_classic() +
+  theme(axis.title.x = element_markdown())
+
+
+p2 <- ggplot(data = dat, 
+       aes(x = group, 
+           y = ft_area_pct)) + 
+  geom_boxplot()
+
+
+
+plot_grid(p1, p2, 
+          ncol = 1, 
+          rel_heights = c(6, 4)) +
+  annotate("text", 
+           x = c(0.02,0.02), 
+           y = c(0.98,0.38), 
+           label = c("A", "B"))
+
+
+
+
+
+```
+
+
+
+
+
+## Saving figures 
+
+- Saving to a suitable output format
+- A workflow for developing figures for publication
+
+
+
+
+
+
+
+
+
+
+
+
